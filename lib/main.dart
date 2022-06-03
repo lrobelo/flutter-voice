@@ -33,7 +33,6 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> scoreKeeper = [];
   int questionNumber = 0;
   int score = 0;
   String question = '';
@@ -43,20 +42,8 @@ class _QuizPageState extends State<QuizPage> {
     setState(
       () {
         if (correctAnswer == userPickedAnswer) {
-          scoreKeeper.add(
-            const Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          );
           score += 10;
         } else {
-          scoreKeeper.add(
-            const Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          );
           score -= 1;
         }
         quizBrain.nextQuestion();
@@ -136,9 +123,6 @@ class _QuizPageState extends State<QuizPage> {
                     questionNumber++;
                   }),
               const SizedBox(height: 20),
-              Row(
-                children: scoreKeeper,
-              )
             ],
           )
         : ScorePage(score: score);
