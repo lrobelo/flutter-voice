@@ -37,8 +37,10 @@ class _QuizPageState extends State<QuizPage> {
   int score = 0;
   String question = '';
 
-  void checkAnswer(bool userPickedAnswer) {
-    bool correctAnswer = quizBrain.getCorrectAnswer();
+  //void checkAnswer(bool userPickedAnswer) {
+  void checkAnswer(String userPickedAnswer) {
+    //bool correctAnswer = quizBrain.getCorrectAnswer();
+    String correctAnswer = quizBrain.getCorrectAnswer();
     setState(
       () {
         if (correctAnswer == userPickedAnswer) {
@@ -58,7 +60,8 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void initAlan() {
-    AlanVoice.addButton("YOUR_SDK_KEY",
+    AlanVoice.addButton(
+        "19daa354cbd97e08635a5037da9f5a3b2e956eca572e1d8b807a3e2338fdd0dc/stage",
         buttonAlign: AlanVoice.BUTTON_ALIGN_RIGHT);
 
     AlanVoice.onCommand.add((command) {
@@ -76,7 +79,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    return questionNumber < 5
+    return questionNumber < 12
         ? Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -84,7 +87,7 @@ class _QuizPageState extends State<QuizPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 100, left: 25),
                 child: Text(
-                  'Question ${questionNumber + 1}/5',
+                  'Question ${questionNumber + 1}/12',
                   style: const TextStyle(
                     color: Color(0xff8187A6),
                     fontSize: 27,
@@ -110,16 +113,27 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               OptionButton(
-                  buttonText: 'True',
+                  buttonText: quizBrain.choices[questionNumber][0],
+                  //buttonText: 'True',
                   onPressed: () {
-                    checkAnswer(true);
+                    checkAnswer(quizBrain.choices[questionNumber][0]);
+                    //checkAnswer(true);
                     questionNumber++;
                   }),
               OptionButton(
-                  buttonText: 'False',
+                  //buttonText: 'False',
+                  buttonText: quizBrain.choices[questionNumber][1],
                   onPressed: () {
-                    checkAnswer(false);
-
+                    //checkAnswer(false);
+                    checkAnswer(quizBrain.choices[questionNumber][1]);
+                    questionNumber++;
+                  }),
+              OptionButton(
+                  //buttonText: 'False',
+                  buttonText: quizBrain.choices[questionNumber][2],
+                  onPressed: () {
+                    //checkAnswer(false);
+                    checkAnswer(quizBrain.choices[questionNumber][2]);
                     questionNumber++;
                   }),
               const SizedBox(height: 20),
